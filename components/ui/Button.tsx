@@ -14,7 +14,7 @@ const base =
 const variants: Record<Variant, string> = {
   primary: "bg-primary text-on-primary hover:opacity-95 shadow-sm active:opacity-90",
   onPrimary: "bg-white text-[#0c382e] hover:bg-white/95 shadow-sm",
-  onPrimarySoft: "border border-white/20 bg-white/10 text-white hover:bg-white/15 backdrop-blur-sm",
+  onPrimarySoft: "border border-white/20 bg-white/10 text-white hover:bg-white/15",
   secondary: "border border-line/90 bg-surface text-text hover:bg-surface-2 shadow-sm",
   ghost: "text-text-muted hover:text-text hover:bg-surface-2",
   danger: "bg-expense text-white hover:bg-expense/90 shadow-sm",

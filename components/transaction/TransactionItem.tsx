@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { ArrowDownLeft, ArrowLeftRight, ArrowUpRight } from "lucide-react";
 import { formatDateShort } from "@/lib/utils/date";
@@ -19,7 +20,7 @@ interface TransactionItemProps {
   showMeta?: boolean;
 }
 
-export function TransactionItem({ transaction: t, category, wallet, toWallet, onEdit, onDelete, showMeta = true }: TransactionItemProps) {
+export function TransactionItemImpl({ transaction: t, category, wallet, toWallet, onEdit, onDelete, showMeta = true }: TransactionItemProps) {
   const isTransfer = t.type === "transfer";
   const isIncome = t.type === "income";
   const color = isTransfer
@@ -94,14 +95,16 @@ export function TransactionItem({ transaction: t, category, wallet, toWallet, on
 
   return (
     <motion.li
-      layout="position"
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, height: 0, marginTop: 0, paddingTop: 0 }}
-      transition={{ duration: 0.22 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.18 }}
       className="list-none"
     >
       {content}
     </motion.li>
   );
 }
+
+/** Item riwayat di-memo agar ribuan baris tidak ikut re-render saat state lain berubah. */
+export const TransactionItem = memo(TransactionItemImpl);

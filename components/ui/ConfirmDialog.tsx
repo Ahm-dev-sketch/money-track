@@ -38,7 +38,7 @@ export function ConfirmDialog({
       {open && (
         <div className="fixed inset-0 z-[60] grid place-items-center p-5">
           <motion.div
-            className="absolute inset-0 bg-[#0c382e]/40 dark:bg-black/70 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-[#0c382e]/40 dark:bg-black/70"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

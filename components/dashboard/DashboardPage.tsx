@@ -4,15 +4,14 @@ import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ChevronRight, Moon, PieChart, ReceiptText, Sun, SunMedium, Sunset } from "lucide-react";
-import { useCashflow, useCategories, useCategorySpending, useSummary, useTransactions, useWallets } from "@/lib/hooks/useData";
+import { useCashflow, useCategories, useCategorySpending, useSummary, useTransactionCount, useTransactions, useWallets } from "@/lib/hooks/useData";
 import { usePeriod } from "@/components/lib/usePeriod";
 import { PageContainer, stagger, rise } from "@/components/ui/PageHeader";
 import { Card, SectionTitle } from "@/components/ui/Card";
 import { BalanceCard } from "./BalanceCard";
 import { PeriodFilter } from "./PeriodFilter";
 import { EmptyDashboard } from "./EmptyDashboard";
-import { CategoryDonut } from "@/components/charts/CategoryDonut";
-import { CashflowChart } from "@/components/charts/CashflowChart";
+import { CategoryDonut, CashflowChart } from "@/components/charts/LazyCharts";
 import { TopSpending } from "@/components/charts/TopSpending";
 import { TransactionItem } from "@/components/transaction/TransactionItem";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -45,15 +44,15 @@ export function DashboardPage() {
   const summary = useSummary(range);
   const spending = useCategorySpending(range);
   const cashflow = useCashflow(range, "day");
-  // Semua transaksi (tanpa filter periode) untuk mendeteksi akun yang masih kosong.
-  const all = useTransactions();
-  const recent = useTransactions({ from: range.from, to: range.to });
+  // Deteksi akun kosong lewat hitungan (index count), bukan memuat semua transaksi.
+  const totalCount = useTransactionCount();
+  const recent = useTransactions({ from: range.from, to: range.to }, 5);
 
   const catMap = useMemo(() => new Map((categories ?? []).map((c) => [c.id, c])), [categories]);
   const walletMap = useMemo(() => new Map((wallets ?? []).map((w) => [w.id, w])), [wallets]);
 
   const recentPreview = recent?.slice(0, 5);
-  const coldStart = all !== undefined && all.length === 0;
+  const coldStart = totalCount !== undefined && totalCount === 0;
 
   return (
     <PageContainer className="space-y-6">
@@ -87,7 +86,7 @@ export function DashboardPage() {
         </motion.div>
       </motion.div>
 
-      {all === undefined ? (
+      {totalCount === undefined ? (
         <LoadingScreen />
       ) : coldStart ? (
         <EmptyDashboard wallet={wallets?.[0]} onStart={openLogger} />

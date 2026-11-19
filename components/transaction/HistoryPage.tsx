@@ -48,20 +48,35 @@ export function HistoryPage() {
 
   const [editing, setEditing] = useState<Transaction | null>(null);
   const [pendingDelete, setPendingDelete] = useState<Transaction | null>(null);
+  // Incremental rendering: muat 30 transaksi terbaru dulu, sisanya on-demand.
+  const PAGE_SIZE = 30;
+  const [visible, setVisible] = useState(PAGE_SIZE);
   const focusId = useMemo(
     () => (typeof window === "undefined" ? null : new URLSearchParams(window.location.search).get("focus")),
     []
   );
 
-  const transactions = useTransactions({
-    type: type === "all" ? undefined : type,
-    walletId: walletId ?? undefined,
-    categoryId: categoryId ?? undefined,
-    search: search.trim() || undefined,
-  });
+  // Limit +1 untuk mendeteksi "masih ada lagi" tanpa query hitung terpisah.
+  const transactions = useTransactions(
+    {
+      type: type === "all" ? undefined : type,
+      walletId: walletId ?? undefined,
+      categoryId: categoryId ?? undefined,
+      search: search.trim() || undefined,
+    },
+    visible + 1
+  );
+
+  const hasMore = transactions != null && transactions.length > visible;
+  const shown = useMemo(() => (transactions ?? []).slice(0, visible), [transactions, visible]);
 
   const catMap = useMemo(() => new Map((categories ?? []).map((c) => [c.id, c])), [categories]);
   const walletMap = useMemo(() => new Map((wallets ?? []).map((w) => [w.id, w])), [wallets]);
+
+  // Ganti filter/search → reset jendela tampil ke halaman pertama.
+  useEffect(() => {
+    setVisible(PAGE_SIZE);
+  }, [search, type, walletId, categoryId]);
 
   // Buka transaksi yang dituju dari dashboard (sekali saja).
   const openedFocus = useRef(false);
@@ -69,8 +84,9 @@ export function HistoryPage() {
     if (!focusId || !transactions || openedFocus.current) return;
     openedFocus.current = true;
     const target = transactions.find((t) => t.id === focusId);
+    if (!target) return;
     const t = window.setTimeout(() => {
-      if (target) setEditing(target);
+      setEditing(target);
       router.replace("/history");
     }, 0);
     return () => window.clearTimeout(t);
@@ -78,14 +94,14 @@ export function HistoryPage() {
 
   const groups = useMemo(() => {
     const map = new Map<string, Transaction[]>();
-    for (const t of transactions ?? []) {
+    for (const t of shown) {
       const key = t.date.slice(0, 10);
       const arr = map.get(key);
       if (arr) arr.push(t);
       else map.set(key, [t]);
     }
     return [...map.entries()].sort((a, b) => (a[0] < b[0] ? 1 : -1));
-  }, [transactions]);
+  }, [shown]);
 
   const activeFilterCount = [type !== "all", walletId !== null, categoryId !== null].filter(Boolean).length;
   const filtering = activeFilterCount > 0 || search.trim().length > 0;
@@ -107,7 +123,7 @@ export function HistoryPage() {
     <PageContainer className="space-y-4">
       <PageHeader
         title="Riwayat"
-        subtitle={transactions ? `${transactions.length} transaksi${filtering ? " (terfilter)" : ""}` : "Memuat…"}
+        subtitle={transactions ? `${shown.length}${hasMore ? "+" : ""} transaksi${filtering ? " (terfilter)" : ""}` : "Memuat…"}
         action={
           filtering ? (
             <button
@@ -215,7 +231,17 @@ export function HistoryPage() {
             );
           })}
 
-          <p className="pt-1 text-center text-[11px] text-text-muted">Ketuk untuk mengedit, tahan untuk menghapus</p>
+          {hasMore ? (
+            <button
+              type="button"
+              onClick={() => setVisible((v) => v + PAGE_SIZE)}
+              className="mx-auto mt-1 flex h-10 items-center gap-2 rounded-full border border-line bg-surface px-4 text-[12.5px] font-semibold text-text-muted transition-colors hover:text-text active:scale-95"
+            >
+              Muat lebih banyak
+            </button>
+          ) : (
+            <p className="pt-1 text-center text-[11px] text-text-muted">Ketuk untuk mengedit, tahan untuk menghapus</p>
+          )}
         </div>
       )}
 

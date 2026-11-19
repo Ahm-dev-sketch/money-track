@@ -42,7 +42,7 @@ export function BottomSheet({ open, onClose, title, subtitle, children, action, 
         <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
           <motion.div
             key="backdrop"
-            className="absolute inset-0 bg-[#0c382e]/35 dark:bg-black/65 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-[#0c382e]/35 dark:bg-black/65"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

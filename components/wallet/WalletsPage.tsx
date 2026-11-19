@@ -73,7 +73,7 @@ export function WalletsPage() {
             <button
               type="button"
               onClick={() => setEditing("new")}
-              className="flex h-10 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 text-[13px] font-bold text-white backdrop-blur-sm transition-transform hover:bg-white/15 active:scale-95"
+              className="flex h-10 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 text-[13px] font-bold text-white transition-transform hover:bg-white/15 active:scale-95"
             >
               <Plus size={15} strokeWidth={2.4} /> Dompet baru
             </button>

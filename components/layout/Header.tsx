@@ -23,7 +23,7 @@ export function Header() {
     "grid h-9 w-9 place-items-center rounded-full border border-line bg-surface text-text-muted transition-all hover:text-text hover:bg-surface-2 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 shadow-xs";
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line/70 bg-bg/85 backdrop-blur-xl supports-[backdrop-filter]:bg-bg/75">
+    <header className="sticky top-0 z-30 border-b border-line/70 bg-bg/95 supports-[backdrop-filter]:bg-bg/90">
       <div className="mx-auto flex h-16 w-full max-w-md items-center justify-between gap-3 px-4 md:max-w-3xl">
         <Link
           href="/"

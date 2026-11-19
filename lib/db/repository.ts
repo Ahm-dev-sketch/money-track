@@ -68,14 +68,18 @@ export async function deleteTransaction(id: string): Promise<void> {
   await db.transactions.delete(id);
 }
 
-/** Filter di-JS untuk fleksibilitas (skala lokal: ribuan record aman). Diurutkan tanggal menurun. */
+/**
+ * Daftar transaksi, diurutkan tanggal menurun (terbaru dulu).
+ * Rentang tanggal memakai indexed query `.where("date").between(...)` (bukan full-scan),
+ * dan `limit` memangkas hasil lebih awal — penting saat data sudah ribuan baris.
+ * Filter non-tanggal (type/wallet/category/search) tetap di-JS di atas hasil yang sudah tergerus.
+ */
 export async function listTransactions(
-  filter: TransactionFilter = {}
+  filter: TransactionFilter = {},
+  limit?: number
 ): Promise<Transaction[]> {
-  const items = await db.transactions.orderBy("date").reverse().toArray();
-  return items.filter((t) => {
-    if (filter.from && t.date < filter.from) return false;
-    if (filter.to && t.date > filter.to) return false;
+  const hasRange = filter.from != null || filter.to != null;
+  const matches = (t: Transaction): boolean => {
     if (filter.type && t.type !== filter.type) return false;
     if (filter.walletId && t.walletId !== filter.walletId) return false;
     if (filter.categoryId && t.categoryId !== filter.categoryId) return false;
@@ -84,7 +88,30 @@ export async function listTransactions(
       if (!t.note.toLowerCase().includes(q)) return false;
     }
     return true;
-  });
+  };
+
+  let rows: Transaction[];
+  if (hasRange) {
+    const from = filter.from ?? "\u0000";
+    const to = filter.to ?? "\uffff"; // ISO datetime: \uffff > semua tanggal ascii
+    // between() mengembalikan urutan menaik; reverse untuk terbaru-dulu.
+    rows = (await db.transactions.where("date").between(from, to, true, true).toArray()).reverse();
+  } else {
+    rows = await db.transactions.orderBy("date").reverse().toArray();
+  }
+
+  const out: Transaction[] = [];
+  for (const t of rows) {
+    if (!matches(t)) continue;
+    out.push(t);
+    if (limit != null && out.length >= limit) break;
+  }
+  return out;
+}
+
+/** Hitung total transaksi (pakai index count, tanpa memuat record ke memori). */
+export async function countTransactions(): Promise<number> {
+  return db.transactions.count();
 }
 
 export async function listWallets(): Promise<Wallet[]> {

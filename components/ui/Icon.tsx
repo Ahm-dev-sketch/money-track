@@ -1,17 +1,64 @@
 "use client";
 
 import { createElement } from "react";
-import * as Icons from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import {
+  ArrowLeftRight,
+  Banknote,
+  Bitcoin,
+  Briefcase,
+  Car,
+  Coins,
+  CreditCard,
+  Gamepad2,
+  Gift,
+  Landmark,
+  Laptop,
+  MoreHorizontal,
+  PiggyBank,
+  Receipt,
+  ShoppingBag,
+  Smartphone,
+  TrendingUp,
+  Utensils,
+  Wallet,
+} from "lucide-react";
 
 export type { LucideIcon };
 
 const FALLBACK_ICON_NAME = "MoreHorizontal";
 
-/** Map nama ikon (string dari DB) -> komponen Lucide, dengan fallback aman. */
+/**
+ * Map nama ikon (string dari DB) -> komponen Lucide, pakai NAMED import (bukan
+ * `import *`) supaya tree-shaking membuang ~1000 ikon lucide yang tak terpakai
+ * dari bundle. Set nama dibatasi oleh seed kategori/dompet + pilihan dompet;
+ * nama di luar map (mis. dari backup lama) jatuh ke fallback.
+ */
+const ICONS: Record<string, LucideIcon> = {
+  ArrowLeftRight,
+  Banknote,
+  Bitcoin,
+  Briefcase,
+  Car,
+  Coins,
+  CreditCard,
+  Gamepad2,
+  Gift,
+  Landmark,
+  Laptop,
+  MoreHorizontal,
+  PiggyBank,
+  Receipt,
+  ShoppingBag,
+  Smartphone,
+  TrendingUp,
+  Utensils,
+  Wallet,
+};
+
 export function getIcon(name: string | null | undefined): LucideIcon {
-  if (!name) return Icons.MoreHorizontal;
-  const direct = (Icons as unknown as Record<string, LucideIcon | undefined>)[name];
+  if (!name) return ICONS[FALLBACK_ICON_NAME];
+  const direct = ICONS[name];
   if (direct) return direct;
   // "utensils-crossed" / "more_horizontal" -> "UtensilsCrossed" / "MoreHorizontal"
   const pascal = name
@@ -19,7 +66,7 @@ export function getIcon(name: string | null | undefined): LucideIcon {
     .filter(Boolean)
     .map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
     .join("");
-  return (Icons as unknown as Record<string, LucideIcon | undefined>)[pascal] ?? Icons.MoreHorizontal;
+  return ICONS[pascal] ?? ICONS[FALLBACK_ICON_NAME];
 }
 
 interface IconProps {

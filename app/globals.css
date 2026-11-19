@@ -82,6 +82,26 @@
     font-family: var(--font-sans);
     font-feature-settings: "cv05", "ss01";
   }
+  /* Hilangkan delay ketuk 300ms + cegah double-tap zoom pada kontrol interaktif. */
+  button,
+  a,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
   ::selection {
     background: color-mix(in srgb, var(--primary) 22%, transparent);
   }

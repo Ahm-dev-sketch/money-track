@@ -18,7 +18,7 @@ import {
   Upload,
 } from "lucide-react";
 import { useThemeContext } from "@/components/theme-provider";
-import { useCategories, useTransactions, useWallets } from "@/lib/hooks/useData";
+import { useCategories, useTransactionCount, useWallets } from "@/lib/hooks/useData";
 import { useInstallPrompt } from "@/lib/hooks/useInstallPrompt";
 import { exportCSV } from "@/lib/portability/csv";
 import { exportJSON, importJSON } from "@/lib/portability/json";
@@ -54,12 +54,10 @@ export function SettingsPage() {
   const { canInstall, isStandalone, promptInstall } = useInstallPrompt();
   const wallets = useWallets();
   const categories = useCategories();
-  const transactions = useTransactions();
+  const totalTx = useTransactionCount();
 
   const fileRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
-
-  const totalTx = transactions?.length;
 
   const runExportCsv = async () => {
     setStatus({ kind: "busy", label: "Menyiapkan CSV…" });

@@ -54,7 +54,7 @@ export function BottomNav() {
     <nav aria-label="Navigasi utama" className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center">
       <div className="w-full max-w-md px-3 pb-[max(10px,env(safe-area-inset-bottom))] md:max-w-3xl">
         <div
-          className="pointer-events-auto grid items-center rounded-[26px] border border-line/80 bg-surface/95 px-2 py-1.5 shadow-[0_4px_20px_-4px_rgba(12,56,46,0.12)] backdrop-blur-xl"
+          className="pointer-events-auto grid items-center rounded-[26px] border border-line/80 bg-surface/95 px-2 py-1.5 shadow-[0_4px_20px_-4px_rgba(12,56,46,0.12)]"
           style={{ gridTemplateColumns: "1fr 1fr 68px 1fr 1fr" }}
         >
           {LEFT.map(renderTab)}

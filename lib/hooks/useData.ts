@@ -6,6 +6,7 @@ import { db } from "@/lib/db/schema";
 import { ensureSeed } from "@/lib/db/seed";
 import {
   listTransactions,
+  countTransactions,
   listWallets,
   listCategories,
   getWalletBalance,
@@ -48,11 +49,19 @@ export function useCategories(): Category[] | undefined {
   return useClientQuery(() => listCategories(), []);
 }
 
-export function useTransactions(filter: TransactionFilter = {}): Transaction[] | undefined {
+export function useTransactions(
+  filter: TransactionFilter = {},
+  limit?: number
+): Transaction[] | undefined {
   return useClientQuery(
-    () => listTransactions(filter),
-    [filter.from, filter.to, filter.type, filter.walletId, filter.categoryId, filter.search]
+    () => listTransactions(filter, limit),
+    [filter.from, filter.to, filter.type, filter.walletId, filter.categoryId, filter.search, limit]
   );
+}
+
+/** Jumlah total transaksi (via index count — tanpa memuat seluruh record ke memori). */
+export function useTransactionCount(): number | undefined {
+  return useClientQuery(() => countTransactions(), []);
 }
 
 export function useSummary(range: DateRange): Summary | undefined {
