@@ -1,0 +1,118 @@
+"use client";
+
+interface AppLogoProps {
+  size?: number;
+  className?: string;
+}
+
+/**
+ * Money Track Official Brand Icon:
+ * Layered Isometric Wealth Stack with 3D Depth & Mint Growth Chevron.
+ */
+export function AppLogo({ size = 36, className = "" }: AppLogoProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 512 512"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`shrink-0 select-none ${className}`}
+      aria-label="Money Track Logo"
+      role="img"
+    >
+      <defs>
+        <linearGradient id="mtBgGrad" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#0E4236" />
+          <stop offset="50%" stopColor="#082820" />
+          <stop offset="100%" stopColor="#03140F" />
+        </linearGradient>
+
+        <linearGradient id="mtBorderGrad" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#34D399" stopOpacity="0.6" />
+          <stop offset="40%" stopColor="#10B981" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="#047857" stopOpacity="0.5" />
+        </linearGradient>
+
+        <radialGradient id="mtAmbientGlow" cx="256" cy="180" r="240" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#10B981" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
+        </radialGradient>
+
+        <linearGradient id="mtBotTopFace" x1="100" y1="280" x2="412" y2="390" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#065F46" />
+          <stop offset="100%" stopColor="#02382A" />
+        </linearGradient>
+        <linearGradient id="mtBotSideFace" x1="100" y1="340" x2="412" y2="420" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#02281E" />
+          <stop offset="100%" stopColor="#011812" />
+        </linearGradient>
+
+        <linearGradient id="mtMidTopFace" x1="100" y1="200" x2="412" y2="310" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#10B981" />
+          <stop offset="100%" stopColor="#047857" />
+        </linearGradient>
+        <linearGradient id="mtMidSideFace" x1="100" y1="260" x2="412" y2="340" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#064E3B" />
+          <stop offset="100%" stopColor="#02281E" />
+        </linearGradient>
+
+        <linearGradient id="mtTopTopFace" x1="100" y1="120" x2="412" y2="230" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#6EE7B7" />
+          <stop offset="50%" stopColor="#10B981" />
+          <stop offset="100%" stopColor="#059669" />
+        </linearGradient>
+        <linearGradient id="mtTopSideFace" x1="100" y1="180" x2="412" y2="260" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#059669" />
+          <stop offset="100%" stopColor="#044E3B" />
+        </linearGradient>
+
+        <linearGradient id="mtCrestGrad" x1="200" y1="140" x2="312" y2="210" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#D1FAE5" />
+        </linearGradient>
+
+        <filter id="mtShadow3D" x="60" y="80" width="392" height="360" filterUnits="userSpaceOnUse">
+          <feDropShadow dx="0" dy="16" stdDeviation="16" floodColor="#010D0A" floodOpacity="0.75" />
+        </filter>
+      </defs>
+
+      <rect x="20" y="20" width="472" height="472" rx="116" fill="url(#mtBgGrad)" />
+      <rect x="20" y="20" width="472" height="472" rx="116" fill="url(#mtAmbientGlow)" />
+      <rect x="21" y="21" width="470" height="470" rx="115" stroke="url(#mtBorderGrad)" strokeWidth="2.5" />
+
+      <path d="M80 44 C160 34 352 34 432 44" stroke="#6EE7B7" strokeOpacity="0.35" strokeWidth="2" strokeLinecap="round" fill="none" />
+
+      <g filter="url(#mtShadow3D)">
+        <g>
+          <path d="M108 344 L108 362 C108 368 113 373 118 376 L250 439 C254 441 258 441 262 439 L394 376 C399 373 404 368 404 362 L404 344 L262 412 C258 414 254 414 250 412 Z" fill="url(#mtBotSideFace)" />
+          <path d="M118 334 C111 330 111 322 118 318 L250 255 C254 253 258 253 262 255 L394 318 C401 322 401 330 394 334 L262 397 C258 399 254 399 250 397 Z" fill="url(#mtBotTopFace)" stroke="#10B981" strokeOpacity="0.3" strokeWidth="1.5" />
+        </g>
+
+        <g>
+          <path d="M108 266 L108 284 C108 290 113 295 118 298 L250 361 C254 363 258 363 262 361 L394 298 C399 295 404 290 404 284 L404 266 L262 334 C258 336 254 336 250 334 Z" fill="url(#mtMidSideFace)" />
+          <path d="M118 256 C111 252 111 244 118 240 L250 177 C254 175 258 175 262 177 L394 240 C401 244 401 252 394 256 L262 319 C258 321 254 321 250 319 Z" fill="url(#mtMidTopFace)" stroke="#34D399" strokeOpacity="0.45" strokeWidth="1.5" />
+        </g>
+
+        <g>
+          <path d="M108 188 L108 206 C108 212 113 217 118 220 L250 283 C254 285 258 285 262 283 L394 220 C399 217 404 212 404 206 L404 188 L262 256 C258 258 254 258 250 256 Z" fill="url(#mtTopSideFace)" />
+          <path d="M118 178 C111 174 111 166 118 162 L250 99 C254 97 258 97 262 99 L394 162 C401 166 401 174 394 178 L262 241 C258 243 254 243 250 241 Z" fill="url(#mtTopTopFace)" stroke="#A7F3D0" strokeOpacity="0.8" strokeWidth="2" />
+
+          <path d="M164 167 L252 125 C254 124 258 124 260 125 L348 167" stroke="#FFFFFF" strokeOpacity="0.4" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+
+          <g transform="translate(256, 172)">
+            <path d="M-52 6 L0 -20 L52 6" stroke="url(#mtCrestGrad)" strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M-26 18 L0 6 L26 18" stroke="url(#mtCrestGrad)" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" opacity={0.9} />
+            <circle cx="0" cy="-20" r="4.5" fill="#FFFFFF" />
+          </g>
+        </g>
+      </g>
+
+      <g transform="translate(398, 108)">
+        <circle cx="0" cy="0" r="20" fill="#34D399" fillOpacity={0.35} />
+        <path d="M0 -18 Q0 0 -18 0 Q0 0 0 18 Q0 0 18 0 Q0 0 0 -18 Z" fill="#FDE047" />
+        <circle cx="0" cy="0" r="3.5" fill="#FFFFFF" />
+      </g>
+    </svg>
+  );
+}

@@ -5,6 +5,7 @@ import { Download, Moon, Settings, Sun, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useThemeContext } from "@/components/theme-provider";
 import { useInstallPrompt } from "@/lib/hooks/useInstallPrompt";
+import { AppLogo } from "@/components/ui/AppLogo";
 
 const brand = "Money Track";
 
@@ -28,9 +29,7 @@ export function Header() {
           href="/"
           className="flex min-w-0 items-center gap-2.5 rounded-2xl p-1 transition-transform active:scale-98 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[14px] bg-[#0c382e] text-[13px] font-bold tracking-tight text-[#f0fdf8] shadow-[0_2px_8px_rgba(12,56,46,0.3)]">
-            MT
-          </span>
+          <AppLogo size={38} className="rounded-[11px] shadow-[0_3px_10px_rgba(12,56,46,0.25)]" />
           <span className="min-w-0 leading-tight">
             <span className="block truncate text-[15px] font-bold tracking-[-0.02em] text-text">
               {brand}
