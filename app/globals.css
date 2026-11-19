@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #fafbfc;
+  --surface: #ffffff;
+  --surface-2: #f2f5f4;
+  --line: #e5e7eb;
+  --text: #1a1d1c;
+  --text-muted: #6b7280;
+  --primary: #115544;
+  --on-primary: #ffffff;
+  --on-accent: #ffffff;
+  --income: #0f766e;
+  --expense: #b4553d;
+  --warning: #a87739;
+  --hero: #002222;
+  --hero-text: #f2f8f6;
+  --hero-muted: #9db6b1;
+  --hero-line: #17413e;
+}
+
+.dark {
+  --bg: #002222;
+  --surface: #0e2525;
+  --surface-2: #153432;
+  --line: #22403d;
+  --text: #eaf1ef;
+  --text-muted: #91a8a3;
+  --primary: #63c7a9;
+  --on-primary: #002222;
+  --on-accent: #002222;
+  --income: #4bc2a0;
+  --expense: #e08c72;
+  --warning: #d6a75d;
+  --hero: #143a36;
+  --hero-text: #f2f8f6;
+  --hero-muted: #9db6b1;
+  --hero-line: #24504c;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-income: var(--income);
+  --color-expense: var(--expense);
+  --color-warning: var(--warning);
+  --color-hero: var(--hero);
+  --color-hero-text: var(--hero-text);
+  --color-hero-muted: var(--hero-muted);
+  --color-hero-line: var(--hero-line);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv05", "ss01";
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--primary) 22%, transparent);
+  }
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Bayangan kartu: netral, tipis, tanpa glow berwarna. */
+  .card-shadow {
+    box-shadow:
+      0 1px 2px rgb(16 24 40 / 0.04),
+      0 12px 32px -24px rgb(16 24 40 / 0.22);
+  }
+  .card-shadow-lg {
+    box-shadow:
+      0 1px 2px rgb(16 24 40 / 0.05),
+      0 22px 48px -30px rgb(16 24 40 / 0.3);
+  }
+  .hero-shadow {
+    box-shadow:
+      0 1px 2px rgb(0 34 34 / 0.1),
+      0 20px 44px -30px rgb(0 34 34 / 0.55);
+  }
+  .shadow-sheet {
+    box-shadow: 0 -8px 40px -20px rgb(0 34 34 / 0.35);
+  }
+  /* Label kecil berhuruf besar untuk metadata sekunder. */
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 10.5px;
+    font-weight: 600;
+  }
 }

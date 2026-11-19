@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Money Track
 
-## Getting Started
+Pelacak pemasukan & pengeluaran harian — **local-first PWA**, offline-first, privasi penuh (data tersimpan di perangkat, bukan di server).
 
-First, run the development server:
+## Fitur
+
+- **Dashboard** — saldo bersih, pemasukan, pengeluaran, daily burn rate + filter periode.
+- **Analitik** — donut kategori, cashflow bar/area, top spending (Recharts).
+- **Catat cepat** — bottom sheet 3-tap, multi-dompet + transfer antar dompet.
+- **Riwayat** — filter / edit / hapus transaksi.
+- **Backup** — export/import CSV & JSON (idempoten).
+- **PWA** — offline-first, installable, Service Worker (serwist).
+
+## Stack
+
+- Next.js (App Router + Static Export) · Tailwind CSS v4 · TypeScript
+- Dexie.js (IndexedDB) · Recharts · Framer Motion · Lucide (ikon, bukan emoji)
+- `@serwist/turbopack` untuk Service Worker (bukan `@ducanh2912/next-pwa`)
+
+## Menjalankan
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # static export ke out/
+npm run preview    # pratinjau hasil build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deploy
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Output statis (`output: "export"`) — deploy ke **Vercel** atau **Cloudflare Pages**:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Vercel:** atur *Framework Preset* = Next.js, *Build Command* = `npm run build`, *Output Directory* = `out`.
+- **Cloudflare Pages:** *Build Command* = `npm run build`, *Output Directory* = `out`.
 
-## Learn More
+## Struktur
 
-To learn more about Next.js, take a look at the following resources:
+- `lib/db/` — skema Dexie, seed, repository (data layer, local-first)
+- `lib/hooks/` — `useData`, `useTheme`, `useInstallPrompt`, `useClientQuery`
+- `lib/utils/` — format IDR, tanggal, id; `lib/portability/` — CSV/JSON
+- `components/` — UI (dashboard, charts, transaction, wallet, settings, layout)
+- `app/` — halaman + manifest + Service Worker (serwist)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Spesifikasi lengkap: [`PRD.md`](./PRD.md).
