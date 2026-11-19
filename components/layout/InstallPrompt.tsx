@@ -58,8 +58,8 @@ export function InstallPrompt() {
           transition={{ type: "spring", stiffness: 320, damping: 26 }}
           className="fixed inset-x-0 bottom-[calc(132px+env(safe-area-inset-bottom))] z-30 mx-auto w-full max-w-md px-4 md:max-w-3xl"
         >
-          <div className="card-shadow relative flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 pr-9">
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+          <div className="card-shadow-lg relative flex items-center gap-3 rounded-[22px] border border-line/80 bg-surface p-3.5 pr-9">
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400">
               {ios && !canInstall ? <Share size={18} strokeWidth={2} /> : <Download size={18} strokeWidth={2} />}
             </div>
             <div className="min-w-0 flex-1">
@@ -74,7 +74,7 @@ export function InstallPrompt() {
               <button
                 type="button"
                 onClick={() => void promptInstall()}
-                className="h-9 shrink-0 rounded-full bg-primary px-3.5 text-[12.5px] font-semibold text-on-primary transition-transform active:scale-95"
+                className="h-9 shrink-0 rounded-full bg-[#0c382e] dark:bg-emerald-600 px-3.5 text-[12.5px] font-semibold text-white transition-transform active:scale-95 shadow-xs"
               >
                 Pasang
               </button>

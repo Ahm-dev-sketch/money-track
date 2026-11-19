@@ -188,14 +188,14 @@ export function HistoryPage() {
             );
             return (
               <section key={day}>
-                <div className="mb-1.5 flex items-center justify-between gap-3 px-1">
-                  <h2 className="text-[11.5px] font-semibold text-text-muted">{formatDateLabel(day)}</h2>
-                  <span className={`text-[11.5px] font-semibold tabular-nums ${net >= 0 ? "text-income" : "text-expense"}`}>
+                <div className="mb-2 flex items-center justify-between gap-3 px-1.5">
+                  <h2 className="text-[12px] font-bold text-text-muted uppercase tracking-wider">{formatDateLabel(day)}</h2>
+                  <span className={`text-[12px] font-bold tabular-nums ${net >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
                     {net >= 0 ? "+" : "−"}
                     {formatIDR(Math.abs(net))}
                   </span>
                 </div>
-                <ul className="card-shadow overflow-hidden rounded-2xl border border-line bg-surface p-1.5">
+                <ul className="card-shadow overflow-hidden rounded-[24px] border border-line/80 bg-surface p-2 divide-y divide-line/40">
                   <AnimatePresence initial={false}>
                     {items.map((t) => (
                       <TransactionItem

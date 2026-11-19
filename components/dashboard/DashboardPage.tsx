@@ -3,10 +3,10 @@
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ChevronRight, PieChart, ReceiptText } from "lucide-react";
+import { ChevronRight, Moon, PieChart, ReceiptText, Sun, SunMedium, Sunset } from "lucide-react";
 import { useCashflow, useCategories, useCategorySpending, useSummary, useTransactions, useWallets } from "@/lib/hooks/useData";
 import { usePeriod } from "@/components/lib/usePeriod";
-import { PageContainer, PageHeader, stagger, rise } from "@/components/ui/PageHeader";
+import { PageContainer, stagger, rise } from "@/components/ui/PageHeader";
 import { Card, SectionTitle } from "@/components/ui/Card";
 import { BalanceCard } from "./BalanceCard";
 import { PeriodFilter } from "./PeriodFilter";
@@ -26,9 +26,19 @@ const PERIOD_LABEL: Record<string, string> = {
   custom: "Kustom",
 };
 
+function getGreeting(): { text: string; icon: typeof Sun } {
+  const h = new Date().getHours();
+  if (h >= 4 && h < 11) return { text: "Selamat Pagi", icon: Sun };
+  if (h >= 11 && h < 15) return { text: "Selamat Siang", icon: SunMedium };
+  if (h >= 15 && h < 19) return { text: "Selamat Sore", icon: Sunset };
+  return { text: "Selamat Malam", icon: Moon };
+}
+
 export function DashboardPage() {
   const router = useRouter();
   const { period, range, setPeriod } = usePeriod();
+  const greeting = useMemo(() => getGreeting(), []);
+  const GreetingIcon = greeting.icon;
 
   const wallets = useWallets();
   const categories = useCategories();
@@ -48,20 +58,24 @@ export function DashboardPage() {
   return (
     <PageContainer className="space-y-6">
       <motion.div variants={stagger} initial="hidden" animate="show" className="space-y-4">
-        <motion.div variants={rise}>
-          <PageHeader
-            title="Ringkasan"
-            subtitle="Arus kas dan pengeluaran periode ini"
-            action={
-              <button
-                type="button"
-                onClick={() => router.push("/history")}
-                className="flex h-9 items-center gap-1 rounded-full border border-line bg-surface px-3.5 text-[12px] font-medium text-text-muted transition-colors hover:text-text active:scale-95"
-              >
-                Riwayat <ChevronRight size={13} strokeWidth={2} />
-              </button>
-            }
-          />
+        {/* FinTrack Top Greeting & Editorial Headline */}
+        <motion.div variants={rise} className="flex items-start justify-between gap-3 px-1">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 text-[12px] font-semibold text-emerald-700 dark:text-emerald-400">
+              <GreetingIcon size={14} strokeWidth={2.2} className="text-amber-500" />
+              <span>{greeting.text}</span>
+            </div>
+            <h1 className="mt-1 text-[21px] sm:text-[23px] font-extrabold leading-snug tracking-tight text-text">
+              Kelola uangmu untuk hari esok yang lebih tertata.
+            </h1>
+          </div>
+          <button
+            type="button"
+            onClick={() => router.push("/history")}
+            className="card-shadow flex h-9 shrink-0 items-center gap-1 rounded-full border border-line/80 bg-surface px-3 text-[12px] font-semibold text-text-muted transition-colors hover:text-text active:scale-95"
+          >
+            Riwayat <ChevronRight size={13} strokeWidth={2.2} />
+          </button>
         </motion.div>
 
         <motion.div variants={rise}>
@@ -80,22 +94,30 @@ export function DashboardPage() {
       ) : (
         <>
           {/* Bento grid: tumpuk di mobile, 6 kolom di desktop */}
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-6">
+          <div className="grid grid-cols-2 gap-3.5 md:grid-cols-6">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.4 }}
-              className="col-span-2 md:col-span-3"
+              className="col-span-2 md:col-span-6"
             >
-              <Card className="h-full">
+              <Card>
                 <SectionTitle
                   icon={PieChart}
-                  right={<span className="text-[11px] font-medium text-text-muted">Pengeluaran</span>}
+                  right={
+                    <button
+                      type="button"
+                      onClick={() => router.push("/analytics")}
+                      className="flex items-center gap-1 text-[12px] font-bold text-emerald-700 dark:text-emerald-400 hover:underline"
+                    >
+                      Detail <ChevronRight size={13} strokeWidth={2.4} />
+                    </button>
+                  }
                 >
-                  Kategori
+                  Arus kas harian
                 </SectionTitle>
-                <CategoryDonut data={spending} height={176} />
+                <CashflowChart data={cashflow} height={200} />
               </Card>
             </motion.div>
 
@@ -107,8 +129,13 @@ export function DashboardPage() {
               className="col-span-2 md:col-span-3"
             >
               <Card className="h-full">
-                <SectionTitle icon={ReceiptText}>Paling boros</SectionTitle>
-                <TopSpending data={spending} limit={4} />
+                <SectionTitle
+                  icon={PieChart}
+                  right={<span className="text-[11px] font-semibold text-text-muted">Pengeluaran</span>}
+                >
+                  Kategori
+                </SectionTitle>
+                <CategoryDonut data={spending} height={176} />
               </Card>
             </motion.div>
 
@@ -117,24 +144,11 @@ export function DashboardPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.4, delay: 0.1 }}
-              className="col-span-2 md:col-span-6"
+              className="col-span-2 md:col-span-3"
             >
-              <Card>
-                <SectionTitle
-                  icon={PieChart}
-                  right={
-                    <button
-                      type="button"
-                      onClick={() => router.push("/analytics")}
-                      className="flex items-center gap-0.5 text-[11.5px] font-semibold text-primary"
-                    >
-                      Detail <ChevronRight size={12} strokeWidth={2} />
-                    </button>
-                  }
-                >
-                  Arus kas harian
-                </SectionTitle>
-                <CashflowChart data={cashflow} height={200} />
+              <Card className="h-full">
+                <SectionTitle icon={ReceiptText}>Paling boros</SectionTitle>
+                <TopSpending data={spending} limit={4} />
               </Card>
             </motion.div>
           </div>
@@ -180,8 +194,8 @@ export function DashboardPage() {
                 />
               </Card>
             ) : (
-              <Card padded={false} className="p-2">
-                <ul className="divide-y divide-line">
+              <Card padded={false} className="rounded-[24px] p-2">
+                <ul className="divide-y divide-line/40">
                   {recentPreview.map((t) => (
                     <TransactionItem
                       key={t.id}

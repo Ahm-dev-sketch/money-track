@@ -29,7 +29,7 @@ export function SegmentedControl<T extends string>({
     <div
       role="tablist"
       aria-orientation="horizontal"
-      className={`flex w-full rounded-full border border-line bg-surface-2/70 p-1 ${className}`}
+      className={`flex w-full rounded-full border border-line/80 bg-surface-2/80 p-1 shadow-inner ${className}`}
     >
       {options.map((opt) => {
         const active = opt.value === value;
@@ -41,13 +41,13 @@ export function SegmentedControl<T extends string>({
             aria-selected={active}
             onClick={() => onChange(opt.value)}
             className={`relative flex-1 rounded-full font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 ${
-              compact ? "h-8 text-[12px]" : "h-9 text-[13px]"
-            } ${active ? "text-on-primary" : "text-text-muted hover:text-text"}`}
+              compact ? "h-8.5 text-[12px]" : "h-9.5 text-[13px]"
+            } ${active ? "text-on-primary shadow-xs" : "text-text-muted hover:text-text"}`}
           >
             {active && (
               <motion.span
                 layoutId={layoutId}
-                className="absolute inset-0 rounded-full bg-primary shadow-[0_1px_2px_rgba(16,24,40,0.12)]"
+                className="absolute inset-0 rounded-full bg-[#0c382e] dark:bg-emerald-600 shadow-[0_2px_8px_rgba(12,56,46,0.25)]"
                 transition={{ type: "spring", stiffness: 420, damping: 34 }}
               />
             )}

@@ -15,7 +15,7 @@ interface CardProps extends CardMotionProps {
 export function Card({ children, className = "", padded = true, ...rest }: CardProps) {
   return (
     <motion.div
-      className={`rounded-2xl border border-line bg-surface card-shadow ${padded ? "p-4" : ""} ${className}`}
+      className={`rounded-[24px] border border-line/80 bg-surface card-shadow transition-shadow ${padded ? "p-4.5 sm:p-5" : ""} ${className}`}
       {...rest}
     >
       {children}
@@ -35,11 +35,11 @@ export function SectionTitle({
   className?: string;
 }) {
   return (
-    <div className={`mb-3 flex items-center justify-between gap-3 px-1 ${className}`}>
-      <h2 className="flex items-center gap-2 text-[13px] font-semibold tracking-[-0.005em] text-text">
+    <div className={`mb-3 flex items-center justify-between gap-3 px-0.5 ${className}`}>
+      <h2 className="flex items-center gap-2 text-[14px] font-bold tracking-tight text-text">
         {IconCmp && (
-          <span className="grid h-6 w-6 place-items-center rounded-lg bg-surface-2 text-primary">
-            <IconCmp size={13} strokeWidth={2} />
+          <span className="grid h-7 w-7 place-items-center rounded-xl bg-surface-2 text-primary dark:text-emerald-400">
+            <IconCmp size={14} strokeWidth={2.2} />
           </span>
         )}
         {children}
@@ -52,7 +52,7 @@ export function SectionTitle({
 export function Chip({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full border border-line bg-surface-2 px-2 py-0.5 text-[11px] font-medium text-text-muted ${className}`}
+      className={`inline-flex items-center gap-1 rounded-full border border-line bg-surface-2/80 px-2.5 py-0.5 text-[11px] font-semibold text-text-muted ${className}`}
     >
       {children}
     </span>

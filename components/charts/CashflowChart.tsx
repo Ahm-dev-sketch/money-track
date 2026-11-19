@@ -92,8 +92,8 @@ export function CashflowChart({ data, height = 240, className = "" }: CashflowCh
               dataKey="income"
               name="Pemasukan"
               fill={INCOME_COLOR}
-              radius={[3, 3, 0, 0]}
-              maxBarSize={16}
+              radius={[6, 6, 0, 0]}
+              maxBarSize={18}
               hide={!visible.income}
               animationDuration={550}
             />
@@ -101,8 +101,8 @@ export function CashflowChart({ data, height = 240, className = "" }: CashflowCh
               dataKey="expense"
               name="Pengeluaran"
               fill={EXPENSE_COLOR}
-              radius={[3, 3, 0, 0]}
-              maxBarSize={16}
+              radius={[6, 6, 0, 0]}
+              maxBarSize={18}
               hide={!visible.expense}
               animationDuration={550}
             />
@@ -110,7 +110,7 @@ export function CashflowChart({ data, height = 240, className = "" }: CashflowCh
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-2 flex items-center justify-center gap-2">
+      <div className="mt-2.5 flex items-center justify-center gap-2">
         {SERIES.map((s) => {
           const on = visible[s.key];
           return (
@@ -119,8 +119,8 @@ export function CashflowChart({ data, height = 240, className = "" }: CashflowCh
               type="button"
               onClick={() => toggle(s.key)}
               aria-pressed={on}
-              className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium transition-all ${
-                on ? "border-line bg-surface text-text" : "border-transparent bg-transparent text-text-muted opacity-60"
+              className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11.5px] font-semibold transition-all active:scale-95 ${
+                on ? "border-line bg-surface-2 text-text shadow-xs" : "border-transparent bg-transparent text-text-muted opacity-50"
               }`}
             >
               <span
@@ -139,18 +139,18 @@ export function CashflowChart({ data, height = 240, className = "" }: CashflowCh
 function CashflowTooltip({ active, payload, label }: TooltipContentProps<number, string>) {
   if (!active || !payload || payload.length === 0) return null;
   return (
-    <div className="card-shadow rounded-lg border border-line bg-surface px-2.5 py-2">
-      <p className="mb-1 text-[11px] font-medium text-text-muted">{label}</p>
+    <div className="rounded-[16px] border border-emerald-900/30 bg-[#0c382e] px-3.5 py-2.5 text-white shadow-xl">
+      <p className="mb-1 text-[11px] font-semibold text-emerald-200/80">{label}</p>
       {payload.map((p) => {
         const key = String(p.dataKey);
-        const color = key === "income" ? INCOME_COLOR : EXPENSE_COLOR;
+        const color = key === "income" ? "#34d399" : "#fb7185";
         return (
-          <p key={key} className="flex items-center justify-between gap-4 text-[11.5px]">
-            <span className="flex items-center gap-1.5 text-text-muted">
+          <p key={key} className="flex items-center justify-between gap-4 text-[12px]">
+            <span className="flex items-center gap-1.5 text-emerald-100/70 font-medium">
               <span className="h-2 w-2 rounded-full" style={{ background: color }} />
               {key === "income" ? "Masuk" : "Keluar"}
             </span>
-            <span className="font-semibold tabular-nums text-text">{formatIDR(Number(p.value ?? 0))}</span>
+            <span className="font-bold tabular-nums text-white">{formatIDR(Number(p.value ?? 0))}</span>
           </p>
         );
       })}

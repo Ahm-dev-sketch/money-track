@@ -51,30 +51,33 @@ export function WalletsPage() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="hero-shadow rounded-[20px] bg-[var(--hero)] p-5 text-[var(--hero-text)]"
+        className="hero-shadow relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#0c382e] via-[#0a3128] to-[#07241d] p-5.5 text-white"
       >
-        <p className="eyebrow flex items-center gap-1.5 text-[var(--hero-muted)]">
-          <WalletIcon size={12} strokeWidth={2} /> Total semua dompet
-        </p>
-        <p className="mt-2 text-[29px] font-semibold leading-none tracking-[-0.03em] tabular-nums">
-          <AnimatedNumber value={total} />
-        </p>
-        <div className="mt-5 flex gap-2 border-t border-[var(--hero-line)] pt-4">
-          <button
-            type="button"
-            onClick={() => openTransfer()}
-            disabled={!wallets || wallets.length < 2}
-            className="flex h-9 items-center gap-1.5 rounded-full bg-white px-3.5 text-[12.5px] font-semibold text-[#002222] transition-transform active:scale-95 disabled:opacity-40"
-          >
-            <ArrowLeftRight size={14} strokeWidth={2} /> Transfer
-          </button>
-          <button
-            type="button"
-            onClick={() => setEditing("new")}
-            className="flex h-9 items-center gap-1.5 rounded-full border border-[var(--hero-line)] bg-white/[0.06] px-3.5 text-[12.5px] font-semibold text-[var(--hero-text)] transition-transform active:scale-95"
-          >
-            <Plus size={14} strokeWidth={2} /> Dompet baru
-          </button>
+        <div className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="relative z-10">
+          <p className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-wider text-emerald-200/80">
+            <WalletIcon size={14} strokeWidth={2.2} /> Total semua dompet
+          </p>
+          <p className="mt-2.5 text-[32px] sm:text-[36px] font-extrabold leading-tight tracking-tight tabular-nums text-white">
+            <AnimatedNumber value={total} />
+          </p>
+          <div className="mt-5 flex gap-2.5 border-t border-white/15 pt-4">
+            <button
+              type="button"
+              onClick={() => openTransfer()}
+              disabled={!wallets || wallets.length < 2}
+              className="flex h-10 items-center gap-2 rounded-full bg-white px-4 text-[13px] font-bold text-[#0c382e] shadow-sm transition-transform active:scale-95 disabled:opacity-40"
+            >
+              <ArrowLeftRight size={15} strokeWidth={2.4} /> Transfer
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditing("new")}
+              className="flex h-10 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 text-[13px] font-bold text-white backdrop-blur-sm transition-transform hover:bg-white/15 active:scale-95"
+            >
+              <Plus size={15} strokeWidth={2.4} /> Dompet baru
+            </button>
+          </div>
         </div>
       </motion.div>
 
@@ -226,9 +229,9 @@ function WalletFormContent({
       }}
       className="space-y-4 pt-1"
     >
-      <div className="flex items-center gap-3 rounded-2xl border border-line bg-surface-2/50 p-3">
-        <span className="grid h-11 w-11 place-items-center rounded-xl" style={{ background: `${color}14`, color }}>
-          <Icon name={icon} size={20} strokeWidth={2} />
+      <div className="flex items-center gap-3.5 rounded-[20px] border border-line/80 bg-surface-2/60 p-3.5">
+        <span className="grid h-11 w-11 place-items-center rounded-[14px]" style={{ background: `${color}1E`, color }}>
+          <Icon name={icon} size={20} strokeWidth={2.2} />
         </span>
         <div className="min-w-0">
           <p className="truncate text-[14px] font-semibold text-text">{name.trim() || "Nama dompet"}</p>

@@ -263,14 +263,16 @@ function ActionRow({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-left transition-colors hover:bg-surface-2 active:scale-[0.99] disabled:opacity-50"
+      className="flex w-full items-center gap-3.5 rounded-[18px] px-3 py-2.5 text-left transition-all hover:bg-surface-2 active:scale-[0.99] disabled:opacity-50"
     >
-      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-surface-2 text-primary">{icon}</span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-[13.5px] font-semibold text-text">{title}</span>
-        <span className="block text-[11.5px] text-text-muted">{description}</span>
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[14px] bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300">
+        {icon}
       </span>
-      <ChevronRight size={16} strokeWidth={2} className="shrink-0 text-text-muted/70" />
+      <span className="min-w-0 flex-1">
+        <span className="block text-[14px] font-semibold text-text">{title}</span>
+        <span className="block text-[12px] text-text-muted">{description}</span>
+      </span>
+      <ChevronRight size={17} strokeWidth={2.2} className="shrink-0 text-text-muted/60" />
     </button>
   );
 }

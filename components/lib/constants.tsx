@@ -3,23 +3,23 @@
 import type { Wallet } from "@/types";
 
 /**
- * Warna tampilan diturunkan dari satu keluarga nada (teal → terracotta → netral)
- * yang terbaca di tema terang maupun gelap. Data tersimpan tidak diubah.
+ * FinTrack Design Reference Color Ramp:
+ * Vibrant, modern, balanced fintech tones for categories and wallets.
  */
 const TONE_RAMP = [
-  "#0F766E",
-  "#2F8A72",
-  "#4E9B84",
-  "#3D7F6C",
-  "#B4553D",
-  "#C97E62",
-  "#8A9490",
-  "#6E837E",
+  "#F59E0B", // Amber / Oranye (Food & Dining)
+  "#10B981", // Emerald (Shopping / Belanja)
+  "#0EA5E9", // Sky Blue (Transport)
+  "#8B5CF6", // Violet / Ungu (Entertainment / Hiburan)
+  "#F43F5E", // Rose / Merah (Bills / Tagihan)
+  "#14B8A6", // Teal (Kebutuhan Harian)
+  "#6366F1", // Indigo (E-Commerce / Gadget)
+  "#64748B", // Slate (Lainnya)
 ] as const;
 
 /** Warna semantik untuk chart (selaras token --income / --expense). */
-export const INCOME_COLOR = "#0F766E";
-export const EXPENSE_COLOR = "#B4553D";
+export const INCOME_COLOR = "#059669";
+export const EXPENSE_COLOR = "#E11D48";
 
 function hashKey(key: string): number {
   let h = 0;

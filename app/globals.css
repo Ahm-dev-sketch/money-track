@@ -3,41 +3,51 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --bg: #fafbfc;
+  /* FinTrack Design Reference - Light Mode */
+  --bg: #f5f7f6;
   --surface: #ffffff;
-  --surface-2: #f2f5f4;
-  --line: #e5e7eb;
-  --text: #1a1d1c;
-  --text-muted: #6b7280;
-  --primary: #115544;
+  --surface-2: #edf2f0;
+  --line: #e3eae6;
+  --text: #111a16;
+  --text-muted: #647a71;
+  --primary: #0c382e;
+  --primary-accent: #10b981;
   --on-primary: #ffffff;
   --on-accent: #ffffff;
-  --income: #0f766e;
-  --expense: #b4553d;
-  --warning: #a87739;
-  --hero: #002222;
-  --hero-text: #f2f8f6;
-  --hero-muted: #9db6b1;
-  --hero-line: #17413e;
+  --income: #059669;
+  --income-surface: #ecfdf5;
+  --expense: #e11d48;
+  --expense-surface: #fff1f2;
+  --warning: #d97706;
+  --hero: #0c382e;
+  --hero-gradient: linear-gradient(145deg, #0d3d32 0%, #082820 100%);
+  --hero-text: #f0fdf8;
+  --hero-muted: #8bbcb0;
+  --hero-line: #1c4d40;
 }
 
 .dark {
-  --bg: #002222;
-  --surface: #0e2525;
-  --surface-2: #153432;
-  --line: #22403d;
-  --text: #eaf1ef;
-  --text-muted: #91a8a3;
-  --primary: #63c7a9;
-  --on-primary: #002222;
-  --on-accent: #002222;
-  --income: #4bc2a0;
-  --expense: #e08c72;
-  --warning: #d6a75d;
-  --hero: #143a36;
-  --hero-text: #f2f8f6;
-  --hero-muted: #9db6b1;
-  --hero-line: #24504c;
+  /* FinTrack Design Reference - Dark Mode */
+  --bg: #090f0d;
+  --surface: #121c18;
+  --surface-2: #192722;
+  --line: #22352e;
+  --text: #edf5f1;
+  --text-muted: #8da39b;
+  --primary: #10b981;
+  --primary-accent: #34d399;
+  --on-primary: #06241c;
+  --on-accent: #06241c;
+  --income: #34d399;
+  --income-surface: #064e3b33;
+  --expense: #fb7185;
+  --expense-surface: #88133733;
+  --warning: #fbbf24;
+  --hero: #102620;
+  --hero-gradient: linear-gradient(145deg, #132f27 0%, #0b1d18 100%);
+  --hero-text: #f0fdf8;
+  --hero-muted: #8bbcb0;
+  --hero-line: #1f3d34;
 }
 
 @theme inline {
@@ -48,15 +58,18 @@
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
   --color-primary: var(--primary);
+  --color-primary-accent: var(--primary-accent);
   --color-on-primary: var(--on-primary);
   --color-income: var(--income);
+  --color-income-surface: var(--income-surface);
   --color-expense: var(--expense);
+  --color-expense-surface: var(--expense-surface);
   --color-warning: var(--warning);
   --color-hero: var(--hero);
   --color-hero-text: var(--hero-text);
   --color-hero-muted: var(--hero-muted);
   --color-hero-line: var(--hero-line);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @layer base {
@@ -78,30 +91,30 @@
 }
 
 @layer utilities {
-  /* Bayangan kartu: netral, tipis, tanpa glow berwarna. */
+  /* FinTrack Style Card Shadows: Soft, elegant, organic fintech elevation */
   .card-shadow {
     box-shadow:
-      0 1px 2px rgb(16 24 40 / 0.04),
-      0 12px 32px -24px rgb(16 24 40 / 0.22);
+      0 1px 3px rgba(12, 56, 46, 0.03),
+      0 8px 24px -12px rgba(12, 56, 46, 0.08);
   }
   .card-shadow-lg {
     box-shadow:
-      0 1px 2px rgb(16 24 40 / 0.05),
-      0 22px 48px -30px rgb(16 24 40 / 0.3);
+      0 2px 6px rgba(12, 56, 46, 0.04),
+      0 16px 36px -16px rgba(12, 56, 46, 0.12);
   }
   .hero-shadow {
     box-shadow:
-      0 1px 2px rgb(0 34 34 / 0.1),
-      0 20px 44px -30px rgb(0 34 34 / 0.55);
+      0 4px 20px -6px rgba(12, 56, 46, 0.35),
+      0 12px 36px -12px rgba(12, 56, 46, 0.25);
   }
   .shadow-sheet {
-    box-shadow: 0 -8px 40px -20px rgb(0 34 34 / 0.35);
+    box-shadow: 0 -10px 40px -16px rgba(12, 56, 46, 0.25);
   }
-  /* Label kecil berhuruf besar untuk metadata sekunder. */
+  /* Eyebrow label */
   .eyebrow {
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    font-size: 11px;
     font-weight: 600;
   }
 }

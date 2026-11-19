@@ -33,24 +33,25 @@ export function CategoryPicker({ categories, type, value, onChange }: CategoryPi
               aria-pressed={active}
               whileTap={{ scale: 0.94 }}
               transition={{ type: "spring", stiffness: 400, damping: 24 }}
-              className="flex w-[76px] shrink-0 flex-col items-center gap-1.5 rounded-xl border px-1 py-2.5 transition-colors"
+              className="flex w-[82px] shrink-0 flex-col items-center gap-2 rounded-[20px] border px-1.5 py-3 transition-all"
               style={{
-                borderColor: active ? `${tone}66` : "var(--line)",
-                background: active ? `${tone}12` : "var(--surface)",
+                borderColor: active ? `${tone}80` : "var(--line)",
+                background: active ? `${tone}16` : "var(--surface)",
+                boxShadow: active ? `0 2px 8px -2px ${tone}40` : undefined,
               }}
             >
               <span
-                className="grid h-10 w-10 place-items-center rounded-full transition-colors"
+                className="grid h-11 w-11 place-items-center rounded-[14px] transition-transform"
                 style={{
-                  background: active ? tone : `${tone}14`,
+                  background: active ? tone : `${tone}1A`,
                   color: active ? inkFor(tone) : tone,
                 }}
               >
-                <Icon name={c.icon} size={18} strokeWidth={2} />
+                <Icon name={c.icon} size={20} strokeWidth={2.2} />
               </span>
               <span
-                className={`line-clamp-2 text-center text-[10.5px] leading-tight ${
-                  active ? "font-semibold text-text" : "font-medium text-text-muted"
+                className={`line-clamp-2 text-center text-[11px] leading-tight ${
+                  active ? "font-bold text-text" : "font-medium text-text-muted"
                 }`}
               >
                 {c.name}

@@ -50,7 +50,7 @@ export function TopSpending({ data, limit = 5, className = "" }: TopSpendingProp
   const max = Math.max(...rows.map((r) => r.total), 1);
 
   return (
-    <ol className={`space-y-3 ${className}`}>
+    <ol className={`space-y-3.5 ${className}`}>
       {rows.map((r, i) => {
         const tone = toneFor(r.categoryId);
         return (
@@ -59,24 +59,24 @@ export function TopSpending({ data, limit = 5, className = "" }: TopSpendingProp
             initial={{ opacity: 0, x: -6 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.05, duration: 0.3 }}
+            className="rounded-[16px] p-1.5 transition-colors hover:bg-surface-2/60"
           >
-            <div className="mb-1.5 flex items-baseline gap-2">
+            <div className="mb-2 flex items-center gap-2.5">
               <span
-                className="grid h-6 w-6 shrink-0 self-center place-items-center rounded-md"
-                style={{ background: `${tone}1A`, color: tone }}
+                className="grid h-8 w-8 shrink-0 place-items-center rounded-xl"
+                style={{ background: `${tone}1E`, color: tone }}
               >
-                <Icon name={r.icon} size={13} strokeWidth={2} />
+                <Icon name={r.icon} size={15} strokeWidth={2.2} />
               </span>
-              <span className="min-w-0 flex-1 truncate text-[12.5px] font-medium text-text">
-                <span className="mr-1 text-[10.5px] font-semibold tabular-nums text-text-muted">{i + 1}.</span>
-                {r.name}
-              </span>
-              <span className="shrink-0 text-[12px] font-semibold tabular-nums text-text">{formatIDR(r.total)}</span>
-              <span className="w-8 shrink-0 text-right text-[10.5px] font-medium tabular-nums text-text-muted">
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[13px] font-semibold text-text">{r.name}</p>
+                <p className="text-[12.5px] font-bold tabular-nums text-text">{formatIDR(r.total)}</p>
+              </div>
+              <span className="shrink-0 rounded-full bg-surface-2 px-2.5 py-0.5 text-[11px] font-bold tabular-nums text-text-muted">
                 {Math.round(r.percent * 100)}%
               </span>
             </div>
-            <ProgressBar value={r.total / max} color={tone} height={4} />
+            <ProgressBar value={r.total / max} color={tone} height={5} className="rounded-full" />
           </motion.li>
         );
       })}

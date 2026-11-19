@@ -122,23 +122,25 @@ export function CategoryDonut({ data, className = "", height = 200 }: CategoryDo
           </PieChart>
         </ResponsiveContainer>
 
-        {/* Label tengah (HTML agar tipografi konsisten) */}
+        {/* Label tengah (FinTrack stacked format) */}
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
-          <span className="max-w-[9rem] truncate text-[10px] font-medium uppercase tracking-[0.1em] text-text-muted">
-            {active ? active.name : "Total keluar"}
+          <span className="max-w-[10rem] truncate text-[11px] font-semibold uppercase tracking-wider text-text-muted">
+            {active ? active.name : "Total Pengeluaran"}
           </span>
-          <span className="mt-1 max-w-[9.5rem] truncate text-[17px] font-semibold tabular-nums tracking-[-0.02em] text-text">
+          <span className="mt-0.5 max-w-[11rem] truncate text-[19px] sm:text-[21px] font-extrabold tabular-nums tracking-tight text-text">
             {formatIDR(active ? active.total : total)}
           </span>
-          {active && (
-            <span className="text-[11px] font-semibold" style={{ color: active.color }}>
+          {active ? (
+            <span className="mt-0.5 inline-block rounded-full px-2 py-0.5 text-[11px] font-bold" style={{ background: `${active.color}1E`, color: active.color }}>
               {Math.round(active.percent * 100)}%
             </span>
+          ) : (
+            <span className="text-[10px] text-text-muted font-medium">Periode ini</span>
           )}
         </div>
       </div>
 
-      <ul className="space-y-0.5">
+      <ul className="space-y-1">
         <AnimatePresence initial={false}>
           {slices.map((s, i) => (
             <motion.li
@@ -148,21 +150,21 @@ export function CategoryDonut({ data, className = "", height = 200 }: CategoryDo
               animate={{ opacity: 1 }}
               onMouseEnter={() => setActiveIndex(i)}
               onMouseLeave={() => setActiveIndex(null)}
-              className={`flex items-center gap-2 rounded-lg px-1.5 py-1.5 transition-colors ${
-                activeIndex === i ? "bg-surface-2" : ""
+              className={`flex items-center gap-2.5 rounded-[16px] px-2.5 py-2 transition-all ${
+                activeIndex === i ? "bg-surface-2 shadow-xs" : "hover:bg-surface-2/60"
               }`}
             >
               <span
-                className="grid h-6 w-6 shrink-0 place-items-center rounded-md"
-                style={{ background: `${s.color}1A`, color: s.color }}
+                className="grid h-7 w-7 shrink-0 place-items-center rounded-xl"
+                style={{ background: `${s.color}1E`, color: s.color }}
               >
-                <Icon name={s.icon} size={12} strokeWidth={2} />
+                <Icon name={s.icon} size={14} strokeWidth={2.2} />
               </span>
-              <span className="min-w-0 flex-1 truncate text-[12.5px] font-medium text-text">{s.name}</span>
-              <span className="shrink-0 text-[11px] font-medium tabular-nums text-text-muted">
+              <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-text">{s.name}</span>
+              <span className="shrink-0 rounded-full bg-surface-2/80 px-2 py-0.5 text-[11px] font-bold tabular-nums text-text-muted">
                 {Math.round(s.percent * 100)}%
               </span>
-              <span className="w-[5.5rem] shrink-0 text-right text-[12px] font-semibold tabular-nums text-text">
+              <span className="w-[6rem] shrink-0 text-right text-[13px] font-bold tabular-nums text-text">
                 {formatIDR(s.total)}
               </span>
             </motion.li>

@@ -42,7 +42,7 @@ export function BottomSheet({ open, onClose, title, subtitle, children, action, 
         <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
           <motion.div
             key="backdrop"
-            className="absolute inset-0 bg-[#002222]/45 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-[#0c382e]/35 dark:bg-black/65 backdrop-blur-[2px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -56,7 +56,7 @@ export function BottomSheet({ open, onClose, title, subtitle, children, action, 
             role="dialog"
             aria-modal="true"
             aria-labelledby={title ? titleId : undefined}
-            className={`relative z-10 flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-[24px] border border-line bg-surface shadow-sheet sm:mb-6 sm:rounded-[24px] ${widthClass}`}
+            className={`relative z-10 flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-[32px] border border-line/80 bg-surface shadow-sheet sm:mb-6 sm:rounded-[32px] ${widthClass}`}
             initial={{ y: "100%", opacity: 0.6 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "100%", opacity: 0.4 }}
@@ -71,21 +71,21 @@ export function BottomSheet({ open, onClose, title, subtitle, children, action, 
             }}
           >
             <div
-              className="flex cursor-grab touch-none justify-center pt-2.5 pb-1 active:cursor-grabbing"
+              className="flex cursor-grab touch-none justify-center pt-3 pb-1.5 active:cursor-grabbing"
               onPointerDown={(e) => dragControls.start(e)}
             >
-              <span className="h-1 w-9 rounded-full bg-line" />
+              <span className="h-1.5 w-11 rounded-full bg-line/90" />
             </div>
 
             {(title || action) && (
               <div className="flex items-start justify-between gap-3 px-5 pb-3 pt-1">
                 <div className="min-w-0">
                   {title && (
-                    <h2 id={titleId} className="truncate text-[17px] font-semibold tracking-[-0.015em] text-text">
+                    <h2 id={titleId} className="truncate text-[18px] font-bold tracking-tight text-text">
                       {title}
                     </h2>
                   )}
-                  {subtitle && <p className="mt-1 text-[12.5px] text-text-muted">{subtitle}</p>}
+                  {subtitle && <p className="mt-0.5 text-[12.5px] font-medium text-text-muted">{subtitle}</p>}
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
                   {action}
@@ -95,7 +95,7 @@ export function BottomSheet({ open, onClose, title, subtitle, children, action, 
                     aria-label="Tutup"
                     className="grid h-9 w-9 place-items-center rounded-full text-text-muted transition-colors hover:bg-surface-2 hover:text-text active:scale-95"
                   >
-                    <X size={18} strokeWidth={2} />
+                    <X size={18} strokeWidth={2.2} />
                   </button>
                 </div>
               </div>

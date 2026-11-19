@@ -29,13 +29,17 @@ export function TransactionItem({ transaction: t, category, wallet, toWallet, on
       : isIncome
         ? "var(--income)"
         : "var(--expense)";
-  const tint = category ? `${color}14` : `color-mix(in srgb, ${color} 12%, transparent)`;
+  const tint = category ? `${color}1A` : `color-mix(in srgb, ${color} 15%, transparent)`;
   const iconName = isTransfer ? TRANSFER_ICON : category?.icon ?? "MoreHorizontal";
   const title = isTransfer
     ? `Transfer ke ${toWallet?.name ?? "dompet"}`
     : t.note.trim() || category?.name || "Tanpa kategori";
 
-  const amountColor = isIncome ? "text-income" : isTransfer ? "text-text-muted" : "text-expense";
+  const amountColor = isIncome
+    ? "text-emerald-600 dark:text-emerald-400"
+    : isTransfer
+      ? "text-text-muted"
+      : "text-text dark:text-rose-300";
   const sign = isIncome ? "+" : isTransfer ? "" : "−";
   const time = t.date.slice(11, 16);
 
@@ -50,31 +54,39 @@ export function TransactionItem({ transaction: t, category, wallet, toWallet, on
         e.preventDefault();
         onDelete(t);
       }}
-      className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left transition-colors hover:bg-surface-2/70 active:bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+      className="group flex w-full items-center gap-3.5 rounded-[18px] px-2.5 py-2.5 text-left transition-all hover:bg-surface-2/80 active:bg-surface-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
     >
       <span
-        className="grid h-9 w-9 shrink-0 place-items-center rounded-full"
+        className="grid h-11 w-11 shrink-0 place-items-center rounded-[16px] transition-transform group-hover:scale-105"
         style={{ background: tint, color }}
       >
-        <Icon name={iconName} size={17} strokeWidth={2} />
+        <Icon name={iconName} size={19} strokeWidth={2.2} />
       </span>
 
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-[13.5px] font-medium text-text">{title}</span>
-        <span className="mt-0.5 flex items-center gap-1 truncate text-[11px] text-text-muted">
-          {isTransfer && <ArrowLeftRight size={11} strokeWidth={2} className="shrink-0" />}
+        <span className="block truncate text-[14px] font-semibold text-text">{title}</span>
+        <span className="mt-0.5 flex items-center gap-1.5 truncate text-[11.5px] font-medium text-text-muted">
+          {isTransfer && <ArrowLeftRight size={11} strokeWidth={2.2} className="shrink-0 text-emerald-600" />}
           {metaParts.join(" · ")}
         </span>
       </span>
 
       <span className="flex shrink-0 flex-col items-end">
-        <span className={`text-[13.5px] font-semibold tabular-nums ${amountColor}`}>
-          {sign}
-          {formatIDR(t.amount)}
+        <span className={`text-[14px] font-bold tabular-nums tracking-tight ${amountColor}`}>
+          {sign} {formatIDR(t.amount)}
         </span>
-        <span className="mt-0.5 flex items-center gap-0.5 text-[10px] font-medium text-text-muted">
-          {isIncome ? <ArrowDownLeft size={10} strokeWidth={2} /> : isTransfer ? null : <ArrowUpRight size={10} strokeWidth={2} />}
-          {isTransfer ? "transfer" : isIncome ? "masuk" : "keluar"}
+        <span className="mt-0.5 flex items-center gap-0.5 text-[10.5px] font-medium text-text-muted">
+          {isIncome ? (
+            <span className="inline-flex items-center text-emerald-600 dark:text-emerald-400 font-medium">
+              <ArrowDownLeft size={10} strokeWidth={2.4} className="mr-0.5" /> Masuk
+            </span>
+          ) : isTransfer ? (
+            <span>Transfer</span>
+          ) : (
+            <span className="inline-flex items-center text-rose-500/80 font-medium">
+              <ArrowUpRight size={10} strokeWidth={2.4} className="mr-0.5" /> Keluar
+            </span>
+          )}
         </span>
       </span>
     </button>

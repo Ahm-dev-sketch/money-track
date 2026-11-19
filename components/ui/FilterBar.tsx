@@ -185,14 +185,14 @@ export function SearchField({
 }) {
   return (
     <label className="relative flex h-11 items-center">
-      <Search size={16} className="pointer-events-none absolute left-3.5 text-text-muted" strokeWidth={2} />
+      <Search size={16} className="pointer-events-none absolute left-3.5 text-text-muted" strokeWidth={2.2} />
       <input
         type="search"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-label="Cari transaksi"
-        className="h-11 w-full rounded-full border border-line bg-surface pl-10 pr-3.5 text-sm text-text placeholder:text-text-muted focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/15 [&::-webkit-search-cancel-button]:hidden"
+        className="card-shadow h-11 w-full rounded-full border border-line/90 bg-surface pl-10 pr-4 text-sm font-medium text-text placeholder:text-text-muted focus:border-emerald-600/50 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 [&::-webkit-search-cancel-button]:hidden"
       />
     </label>
   );
@@ -223,16 +223,16 @@ export function FilterToggle({ open, onClick, count }: { open: boolean; onClick:
       type="button"
       onClick={onClick}
       aria-expanded={open}
-      className="relative flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 text-[13px] font-medium text-text transition-colors hover:bg-surface-2 active:scale-95"
+      className="card-shadow relative flex h-11 shrink-0 items-center gap-1.5 rounded-full border border-line/90 bg-surface px-4 text-[13px] font-semibold text-text transition-colors hover:bg-surface-2 active:scale-95"
     >
       Filter
       {count > 0 && (
-        <span className="grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-bold text-on-primary">
+        <span className="grid h-4 min-w-4 place-items-center rounded-full bg-[#0c382e] dark:bg-emerald-600 px-1 text-[10px] font-bold text-white">
           {count}
         </span>
       )}
       <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}>
-        <ChevronDown size={15} strokeWidth={2} />
+        <ChevronDown size={15} strokeWidth={2.2} />
       </motion.span>
     </button>
   );

@@ -44,7 +44,7 @@ export function AmountInput({ value, onChange, accent = "var(--text)", autoFocus
             if (el) el.setSelectionRange(el.value.length, el.value.length);
           });
         }}
-        className="w-full rounded-2xl border border-line bg-surface-2/60 px-4 py-4 text-right text-[30px] font-semibold tabular-nums tracking-[-0.03em] placeholder:font-medium placeholder:text-text-muted/60 focus:border-primary/50 focus:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/15"
+        className="w-full rounded-[24px] border border-line/90 bg-surface-2/70 px-5 py-4 text-right text-[32px] sm:text-[36px] font-extrabold tabular-nums tracking-tight placeholder:font-medium placeholder:text-text-muted/50 focus:border-emerald-600/50 focus:bg-surface focus:outline-none focus:ring-2 focus:ring-emerald-600/20"
         style={{ color: empty ? undefined : accent }}
       />
     </div>

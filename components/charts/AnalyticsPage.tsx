@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { ChartColumn, PieChart, Trophy } from "lucide-react";
+import { ChartColumn, Lightbulb, PieChart, Sparkles, TrendingUp, Trophy } from "lucide-react";
 import { useCashflow, useCategorySpending, useSummary } from "@/lib/hooks/useData";
 import { usePeriod } from "@/components/lib/usePeriod";
 import { PageContainer, PageHeader, rise, stagger } from "@/components/ui/PageHeader";
@@ -28,6 +28,16 @@ export function AnalyticsPage() {
 
   const ratio =
     summary && summary.income > 0 ? Math.min(1, summary.expense / summary.income) : null;
+
+  const topCategory = useMemo(() => {
+    if (!spending || spending.length === 0) return null;
+    return [...spending].sort((a, b) => b.total - a.total)[0];
+  }, [spending]);
+
+  const topPercent = useMemo(() => {
+    if (!topCategory || !summary || summary.expense <= 0) return 0;
+    return Math.round((topCategory.total / summary.expense) * 100);
+  }, [topCategory, summary]);
 
   return (
     <PageContainer className="space-y-5">
@@ -57,6 +67,36 @@ export function AnalyticsPage() {
           />
         </div>
       </motion.div>
+
+      {/* FinTrack Expense Insights Card (Screen 4 Reference) */}
+      {summary && summary.expense > 0 && (
+        <Card className="space-y-3">
+          <SectionTitle icon={Lightbulb}>Insight Pengeluaran</SectionTitle>
+          <div className="space-y-2.5">
+            <div className="flex items-center gap-3 rounded-[16px] bg-emerald-50/70 dark:bg-emerald-950/30 p-3">
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-400">
+                <TrendingUp size={16} strokeWidth={2.2} />
+              </span>
+              <p className="text-[12.5px] font-medium text-text">
+                {ratio != null
+                  ? `Pengeluaran mencakup ${Math.round(ratio * 100)}% dari total pemasukan periode ini.`
+                  : `Rata-rata pengeluaran harianmu adalah ${formatIDR(Math.round(summary.burnRate))} per hari.`}
+              </p>
+            </div>
+
+            {topCategory && (
+              <div className="flex items-center gap-3 rounded-[16px] bg-purple-50/70 dark:bg-purple-950/30 p-3">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-400">
+                  <Sparkles size={16} strokeWidth={2.2} />
+                </span>
+                <p className="text-[12.5px] font-medium text-text">
+                  Kategori <span className="font-bold">{topCategory.name}</span> adalah pengeluaran terbesarmu ({topPercent}%).
+                </p>
+              </div>
+            )}
+          </div>
+        </Card>
+      )}
 
       <Card>
         <SectionTitle icon={PieChart} right={<span className="text-[11px] font-medium text-text-muted">Kategori &lt; 3% digabung</span>}>
@@ -89,11 +129,11 @@ export function AnalyticsPage() {
 
 function MiniStat({ label, value, tone }: { label: string; value: string; tone: "expense" | "muted" }) {
   return (
-    <div className="rounded-2xl border border-line bg-surface p-4">
-      <p className="text-[10.5px] font-medium uppercase tracking-[0.08em] text-text-muted">{label}</p>
+    <div className="card-shadow rounded-[22px] border border-line/80 bg-surface p-4">
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-text-muted">{label}</p>
       <p
-        className={`mt-1.5 truncate text-[17px] font-semibold tabular-nums tracking-[-0.02em] ${
-          tone === "expense" ? "text-expense" : "text-text"
+        className={`mt-1.5 truncate text-[18px] sm:text-[20px] font-extrabold tabular-nums tracking-tight ${
+          tone === "expense" ? "text-rose-600 dark:text-rose-400" : "text-text"
         }`}
       >
         {value}

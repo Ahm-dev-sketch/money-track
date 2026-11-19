@@ -38,7 +38,7 @@ export function ConfirmDialog({
       {open && (
         <div className="fixed inset-0 z-[60] grid place-items-center p-5">
           <motion.div
-            className="absolute inset-0 bg-[#002222]/50 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-[#0c382e]/40 dark:bg-black/70 backdrop-blur-[2px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -49,7 +49,7 @@ export function ConfirmDialog({
             role="alertdialog"
             aria-modal="true"
             aria-label={title}
-            className="card-shadow-lg relative z-10 w-full max-w-xs overflow-hidden rounded-[20px] border border-line bg-surface p-5"
+            className="card-shadow-lg relative z-10 w-full max-w-xs overflow-hidden rounded-[24px] border border-line/80 bg-surface p-5.5"
             initial={{ opacity: 0, scale: 0.94, y: 8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 6 }}
