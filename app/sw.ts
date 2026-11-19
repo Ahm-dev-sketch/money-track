@@ -17,6 +17,13 @@ const serwist = new Serwist({
   skipWaiting: true,
   clientsClaim: true,
   navigationPreload: true,
+  precacheOptions: {
+    // Serwist's default already sets cleanURLs: true and directoryIndex:
+    // "index.html", which map /analytics -> /analytics.html and / -> /index.html.
+    // Ignore ALL query params when matching precache so /?source=pwa (start_url
+    // from an installed PWA) still resolves to /index.html.
+    ignoreURLParametersMatching: [/.*/],
+  },
   runtimeCaching: defaultCache,
   fallbacks: {
     entries: [
