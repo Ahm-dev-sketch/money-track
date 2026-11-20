@@ -132,7 +132,7 @@ function MiniStat({ label, value, tone }: { label: string; value: string; tone: 
       <p className="text-[11px] font-semibold uppercase tracking-wider text-text-muted">{label}</p>
       <p
         className={`mt-1.5 truncate text-[18px] sm:text-[20px] font-extrabold tabular-nums tracking-tight ${
-          tone === "expense" ? "text-rose-600 dark:text-rose-400" : "text-text"
+          tone === "expense" ? "text-expense" : "text-text"
         }`}
       >
         {value}

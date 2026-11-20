@@ -206,7 +206,7 @@ export function HistoryPage() {
               <section key={day}>
                 <div className="mb-2 flex items-center justify-between gap-3 px-1.5">
                   <h2 className="text-[12px] font-bold text-text-muted uppercase tracking-wider">{formatDateLabel(day)}</h2>
-                  <span className={`text-[12px] font-bold tabular-nums ${net >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
+                  <span className={`text-[12px] font-bold tabular-nums ${net >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-expense"}`}>
                     {net >= 0 ? "+" : "−"}
                     {formatIDR(Math.abs(net))}
                   </span>

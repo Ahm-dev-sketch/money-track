@@ -112,6 +112,10 @@ function LoggerForm({ wallets, preferredWallet, editing, onDone, onRequestDelete
   // Dompet yang dipilih bisa hilang (mis. dihapus) → pakai fallback tanpa mengubah state.
   const effectiveWalletId = wallets.some((w) => w.id === walletId) ? walletId : fallbackWallet;
 
+  // Warna nominal memakai token tema (coral lembut di mode gelap agar tetap terbaca);
+  // tombol simpan memakai konstanta padat supaya teks putih tetap kontras.
+  const amountAccent =
+    type === "income" ? "var(--income)" : type === "transfer" ? TRANSFER_COLOR : "var(--expense)";
   const accent = type === "income" ? INCOME_COLOR : type === "transfer" ? TRANSFER_COLOR : EXPENSE_COLOR;
 
   const changeType = (next: TxType) => {
@@ -195,7 +199,7 @@ function LoggerForm({ wallets, preferredWallet, editing, onDone, onRequestDelete
         ariaLabel="Jenis transaksi"
       />
 
-      <AmountInput value={amount} onChange={setAmount} accent={accent} autoFocus={!isEdit} />
+      <AmountInput value={amount} onChange={setAmount} accent={amountAccent} autoFocus={!isEdit} />
 
       {type !== "transfer" ? (
         <div>

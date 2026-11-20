@@ -40,14 +40,14 @@ export function WalletCard({ data, onEdit, index = 0 }: WalletCardProps) {
           <p className="truncate text-[13px] font-medium text-text-muted">{wallet.name}</p>
           <p
             className={`mt-0.5 truncate text-[18px] font-bold tabular-nums tracking-tight ${
-              negative ? "text-rose-600 dark:text-rose-400" : "text-text"
+              negative ? "text-expense" : "text-text"
             }`}
           >
             {formatIDR(balance)}
           </p>
         </div>
         {negative ? (
-          <Chip className="border-rose-200 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400">
+          <Chip className="border-expense/25 bg-expense/10 text-expense">
             <ArrowDownRight size={11} strokeWidth={2.4} /> minus
           </Chip>
         ) : (

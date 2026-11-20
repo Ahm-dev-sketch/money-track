@@ -174,8 +174,41 @@ export async function addCategory(input: {
   return id;
 }
 
+export async function updateCategory(
+  id: string,
+  patch: Partial<Pick<Category, "name" | "icon" | "color" | "type">>
+): Promise<void> {
+  const existing = await db.categories.get(id);
+  if (!existing) return;
+  const next: Category = { ...existing, ...patch, id };
+  // Pindah grup tipe (expense <-> income) → letakkan di akhir grup baru.
+  if (patch.type && patch.type !== existing.type) {
+    next.order = await db.categories.where("type").equals(patch.type).count();
+  }
+  await db.categories.put(next);
+}
+
 export async function deleteCategory(id: string): Promise<void> {
+  const existing = await db.categories.get(id);
+  if (!existing) return;
+  if (existing.isSystem) {
+    throw new Error("Kategori bawaan tidak dapat dihapus.");
+  }
   await db.categories.delete(id);
+}
+
+/** Jumlah transaksi yang merujuk wallet (sebagai sumber ataupun tujuan transfer). */
+export async function countTransactionsByWallet(walletId: string): Promise<number> {
+  const [outgoing, incoming] = await Promise.all([
+    db.transactions.where("walletId").equals(walletId).count(),
+    db.transactions.where("toWalletId").equals(walletId).count(),
+  ]);
+  return outgoing + incoming;
+}
+
+/** Jumlah transaksi yang memakai kategori tertentu. */
+export async function countTransactionsByCategory(categoryId: string): Promise<number> {
+  return db.transactions.where("categoryId").equals(categoryId).count();
 }
 
 export async function getSetting<T>(key: string, fallback: T): Promise<T> {

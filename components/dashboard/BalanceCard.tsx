@@ -109,10 +109,10 @@ export function BalanceCard({ summary, range, periodLabel }: BalanceCardProps) {
               className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-semibold ${
                 positive
                   ? "bg-emerald-400/20 text-emerald-300"
-                  : "bg-rose-400/20 text-rose-300"
+                  : "bg-[#e09484]/20 text-[#eeb4a7]"
               }`}
             >
-              <span className={`h-1.5 w-1.5 rounded-full ${positive ? "bg-emerald-400" : "bg-rose-400"}`} />
+              <span className={`h-1.5 w-1.5 rounded-full ${positive ? "bg-emerald-400" : "bg-[#e09484]"}`} />
               {positive ? "Surplus periode" : "Defisit periode"}
             </span>
           </div>
@@ -152,10 +152,10 @@ export function BalanceCard({ summary, range, periodLabel }: BalanceCardProps) {
           className="card-shadow flex flex-col justify-between rounded-[24px] border border-line/80 bg-surface p-4 transition-transform hover:-translate-y-0.5"
         >
           <div className="flex items-center justify-between">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-rose-50 dark:bg-rose-950/50 text-rose-500 dark:text-rose-400">
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-expense/10 text-expense">
               <ArrowDownRight size={18} strokeWidth={2.4} />
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-rose-500 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-full">
+            <span className="rounded-full bg-expense/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-expense">
               Keluar
             </span>
           </div>

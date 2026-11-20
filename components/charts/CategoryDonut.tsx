@@ -8,9 +8,8 @@ import { PieChart as PieChartIcon } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Icon } from "@/components/ui/Icon";
 import { formatIDR } from "@/lib/utils/format";
-import { toneFor } from "@/components/lib/constants";
+import { categoryTone } from "@/components/lib/constants";
 import type { CategorySpending } from "@/types";
-
 interface CategoryDonutProps {
   data: CategorySpending[] | undefined;
   /** Tampilkan total di tengah donut. */
@@ -41,7 +40,7 @@ function groupSmall(sliceSource: CategorySpending[], total: number): Slice[] {
       name: d.name,
       icon: d.icon,
       // Warna tampilan dipetakan ke keluarga palet (data sumber tidak diubah).
-      color: toneFor(d.categoryId),
+      color: categoryTone({ id: d.categoryId, color: d.color }),
       total: d.total,
       percent: d.total / total,
     };

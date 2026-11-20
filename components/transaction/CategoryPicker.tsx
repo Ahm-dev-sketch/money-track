@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { Plus } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
-import { inkFor, toneFor } from "@/components/lib/constants";
+import { CategoryFormSheet } from "@/components/category/CategoryFormSheet";
+import { categoryTone, inkFor } from "@/components/lib/constants";
 import type { Category, TxType } from "@/types";
 
 interface CategoryPickerProps {
@@ -14,6 +17,7 @@ interface CategoryPickerProps {
 }
 
 export function CategoryPicker({ categories, type, value, onChange }: CategoryPickerProps) {
+  const [creating, setCreating] = useState(false);
   const items = categories.filter((c) => c.type === type).sort((a, b) => a.order - b.order);
 
   return (
@@ -24,7 +28,7 @@ export function CategoryPicker({ categories, type, value, onChange }: CategoryPi
         )}
         {items.map((c) => {
           const active = c.id === value;
-          const tone = toneFor(c.id);
+          const tone = categoryTone(c);
           return (
             <motion.button
               key={c.id}
@@ -59,7 +63,29 @@ export function CategoryPicker({ categories, type, value, onChange }: CategoryPi
             </motion.button>
           );
         })}
+
+        <motion.button
+          type="button"
+          onClick={() => setCreating(true)}
+          whileTap={{ scale: 0.94 }}
+          transition={{ type: "spring", stiffness: 400, damping: 24 }}
+          className="flex w-[82px] shrink-0 flex-col items-center gap-2 rounded-[20px] border border-dashed border-line px-1.5 py-3 text-text-muted transition-colors hover:border-primary/40 hover:text-primary"
+        >
+          <span className="grid h-11 w-11 place-items-center rounded-[14px] bg-surface-2/80">
+            <Plus size={19} strokeWidth={2.2} />
+          </span>
+          <span className="text-center text-[11px] font-semibold leading-tight">Baru</span>
+        </motion.button>
       </div>
+
+      <CategoryFormSheet
+        open={creating}
+        onClose={() => setCreating(false)}
+        category={null}
+        defaultType={type}
+        subtitle="Kategori baru langsung terpilih untuk transaksi ini."
+        onSaved={(id) => onChange(id)}
+      />
     </div>
   );
 }

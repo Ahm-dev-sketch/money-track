@@ -6,7 +6,7 @@ import { ArrowDownLeft, ArrowLeftRight, ArrowUpRight } from "lucide-react";
 import { formatDateShort } from "@/lib/utils/date";
 import { formatIDR } from "@/lib/utils/format";
 import { Icon } from "@/components/ui/Icon";
-import { toneFor, TRANSFER_COLOR, TRANSFER_ICON } from "@/components/lib/constants";
+import { categoryTone, TRANSFER_COLOR, TRANSFER_ICON } from "@/components/lib/constants";
 import type { Category, Transaction, Wallet } from "@/types";
 
 interface TransactionItemProps {
@@ -26,7 +26,7 @@ export function TransactionItemImpl({ transaction: t, category, wallet, toWallet
   const color = isTransfer
     ? TRANSFER_COLOR
     : category
-      ? toneFor(category.id)
+      ? categoryTone(category)
       : isIncome
         ? "var(--income)"
         : "var(--expense)";
@@ -40,7 +40,7 @@ export function TransactionItemImpl({ transaction: t, category, wallet, toWallet
     ? "text-emerald-600 dark:text-emerald-400"
     : isTransfer
       ? "text-text-muted"
-      : "text-text dark:text-rose-300";
+      : "text-text";
   const sign = isIncome ? "+" : isTransfer ? "" : "−";
   const time = t.date.slice(11, 16);
 
@@ -84,7 +84,7 @@ export function TransactionItemImpl({ transaction: t, category, wallet, toWallet
           ) : isTransfer ? (
             <span>Transfer</span>
           ) : (
-            <span className="inline-flex items-center text-rose-500/80 font-medium">
+            <span className="inline-flex items-center text-expense font-medium">
               <ArrowUpRight size={10} strokeWidth={2.4} className="mr-0.5" /> Keluar
             </span>
           )}

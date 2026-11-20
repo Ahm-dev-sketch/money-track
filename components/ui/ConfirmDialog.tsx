@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, type ReactNode } from "react";
 import { TriangleAlert } from "lucide-react";
+import { isTopOverlay, popOverlay, pushOverlay } from "./overlayStack";
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -28,9 +29,19 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const token = Symbol("dialog");
+    pushOverlay(token);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isTopOverlay(token)) {
+        e.preventDefault();
+        onClose();
+      }
+    };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      popOverlay(token);
+      window.removeEventListener("keydown", onKey);
+    };
   }, [open, onClose]);
 
   return (
@@ -78,8 +89,8 @@ export function ConfirmDialog({
                   onConfirm();
                   onClose();
                 }}
-                className={`h-11 flex-1 rounded-full text-sm font-semibold text-white transition-transform active:scale-[0.98] ${
-                  danger ? "bg-expense" : "bg-primary"
+                className={`h-11 flex-1 rounded-full text-sm font-semibold transition-transform active:scale-[0.98] ${
+                  danger ? "bg-expense text-on-primary" : "bg-primary text-on-primary"
                 }`}
               >
                 {confirmLabel}

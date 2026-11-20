@@ -3,23 +3,25 @@
 import type { Wallet } from "@/types";
 
 /**
- * FinTrack Design Reference Color Ramp:
- * Vibrant, modern, balanced fintech tones for categories and wallets.
+ * Palet aksen bersama: nada bumi, sage, dan teal yang menyatu dengan warna
+ * utama #0c382e. Semua nada sengaja muted (bukan neon) supaya kartu dan sheet
+ * tetap netral.
  */
 const TONE_RAMP = [
-  "#F59E0B", // Amber / Oranye (Food & Dining)
-  "#10B981", // Emerald (Shopping / Belanja)
-  "#0EA5E9", // Sky Blue (Transport)
-  "#8B5CF6", // Violet / Ungu (Entertainment / Hiburan)
-  "#F43F5E", // Rose / Merah (Bills / Tagihan)
-  "#14B8A6", // Teal (Kebutuhan Harian)
-  "#6366F1", // Indigo (E-Commerce / Gadget)
-  "#64748B", // Slate (Lainnya)
+  "#B4553D", // Terracotta
+  "#C97E62", // Clay
+  "#0F766E", // Teal tua
+  "#2F8A72", // Hijau pinus
+  "#4E9B84", // Sage
+  "#5B7A8C", // Biru slate
+  "#8A6B7E", // Plum redup
+  "#8A9490", // Slate netral
 ] as const;
 
 /** Warna semantik untuk chart (selaras token --income / --expense). */
 export const INCOME_COLOR = "#059669";
-export const EXPENSE_COLOR = "#E11D48";
+/** Coral lembut (bukan crimson neon) senada dengan teal utama. */
+export const EXPENSE_COLOR = "#B04F45";
 
 function hashKey(key: string): number {
   let h = 0;
@@ -30,6 +32,14 @@ function hashKey(key: string): number {
 /** Warna palet stabil untuk sebuah entitas (kategori/dompet). */
 export function toneFor(key: string): string {
   return TONE_RAMP[hashKey(key) % TONE_RAMP.length];
+}
+
+const HEX_COLOR = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i;
+
+/** Warna kategori: pakai warna tersimpan bila valid, fallback palet untuk data lama. */
+export function categoryTone(category: { id: string; color?: string }): string {
+  const stored = category.color?.trim() ?? "";
+  return HEX_COLOR.test(stored) ? stored : toneFor(category.id);
 }
 
 /** Warna teks yang terbaca di atas isian warna solid. */
@@ -56,6 +66,29 @@ export const WALLET_ICON_CHOICES = [
 
 /** Pilihan warna dompet — semua dari keluarga palet. */
 export const WALLET_COLOR_CHOICES = TONE_RAMP;
+
+/** Ikon kategori (Lucide, tanpa emoji). */
+export const CATEGORY_ICON_CHOICES = [
+  "Utensils",
+  "Coffee",
+  "Car",
+  "Fuel",
+  "ShoppingBag",
+  "Receipt",
+  "Gamepad2",
+  "HeartPulse",
+  "GraduationCap",
+  "Home",
+  "Smartphone",
+  "Gift",
+  "TrendingUp",
+  "Briefcase",
+  "Plane",
+  "MoreHorizontal",
+] as const;
+
+/** Warna kategori — palet muted yang selaras dengan teal. */
+export const CATEGORY_COLOR_CHOICES = TONE_RAMP;
 
 /** Warna tampil dompet: pakai pilihan tersimpan bila masih dalam palet, else fallback deterministik. */
 export function walletTone(wallet: { id: string; color: string }): string {

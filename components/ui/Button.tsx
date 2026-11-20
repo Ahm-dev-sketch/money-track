@@ -17,7 +17,7 @@ const variants: Record<Variant, string> = {
   onPrimarySoft: "border border-white/20 bg-white/10 text-white hover:bg-white/15",
   secondary: "border border-line/90 bg-surface text-text hover:bg-surface-2 shadow-sm",
   ghost: "text-text-muted hover:text-text hover:bg-surface-2",
-  danger: "bg-expense text-white hover:bg-expense/90 shadow-sm",
+  danger: "bg-expense text-on-primary hover:bg-expense/90 shadow-sm",
   income: "bg-income text-white hover:bg-income/90 shadow-sm",
 };
 

@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { Plus } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
 import { walletTone } from "@/components/lib/constants";
+import { WalletFormSheet } from "@/components/wallet/WalletFormSheet";
 import type { Wallet } from "@/types";
 
 interface WalletPickerProps {
@@ -16,6 +19,7 @@ interface WalletPickerProps {
 }
 
 export function WalletPicker({ wallets, value, onChange, label, excludeId, layoutId }: WalletPickerProps) {
+  const [creating, setCreating] = useState(false);
   const items = wallets.filter((w) => w.id !== excludeId);
 
   return (
@@ -53,8 +57,23 @@ export function WalletPicker({ wallets, value, onChange, label, excludeId, layou
             </button>
           );
         })}
-        {items.length === 0 && <p className="text-[12.5px] text-text-muted">Tidak ada dompet lain.</p>}
+        <button
+          type="button"
+          onClick={() => setCreating(true)}
+          className="flex h-9 items-center gap-1 rounded-full border border-dashed border-line px-3 text-[12.5px] font-semibold text-text-muted transition-colors hover:border-primary/40 hover:text-primary"
+        >
+          <Plus size={13} strokeWidth={2.4} />
+          <span>Dompet Baru</span>
+        </button>
       </div>
+
+      <WalletFormSheet
+        open={creating}
+        onClose={() => setCreating(false)}
+        wallet={null}
+        subtitle="Dompet dipakai sebagai sumber dana transaksi."
+        onSaved={(id) => onChange(id)}
+      />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Icon } from "@/components/ui/Icon";
 import { formatIDR } from "@/lib/utils/format";
-import { toneFor } from "@/components/lib/constants";
+import { categoryTone } from "@/components/lib/constants";
 import type { CategorySpending } from "@/types";
 
 interface TopSpendingProps {
@@ -52,7 +52,7 @@ export function TopSpending({ data, limit = 5, className = "" }: TopSpendingProp
   return (
     <ol className={`space-y-3.5 ${className}`}>
       {rows.map((r, i) => {
-        const tone = toneFor(r.categoryId);
+        const tone = categoryTone({ id: r.categoryId, color: r.color });
         return (
           <motion.li
             key={r.categoryId}

@@ -2,7 +2,9 @@
 
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { useEffect, useId, useRef, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import { isTopOverlay, popOverlay, pushOverlay } from "./overlayStack";
 
 interface BottomSheetProps {
   open: boolean;
@@ -21,22 +23,35 @@ export function BottomSheet({ open, onClose, title, subtitle, children, action, 
   const dragControls = useDragControls();
   const panelRef = useRef<HTMLDivElement>(null);
   const scrollLockPrev = useRef<string>("");
+  const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!open) return;
     scrollLockPrev.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const token = Symbol("sheet");
+    pushOverlay(token);
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape" && isTopOverlay(token)) {
+        e.preventDefault();
+        onCloseRef.current();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => {
+      popOverlay(token);
       document.body.style.overflow = scrollLockPrev.current;
       window.removeEventListener("keydown", onKey);
     };
-  }, [open, onClose]);
+  }, [open]);
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <AnimatePresence>
       {open && (
         <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
@@ -107,6 +122,7 @@ export function BottomSheet({ open, onClose, title, subtitle, children, action, 
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

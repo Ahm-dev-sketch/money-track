@@ -15,6 +15,7 @@ import {
   Moon,
   Share,
   Sun,
+  Tags,
   Upload,
 } from "lucide-react";
 import { useThemeContext } from "@/components/theme-provider";
@@ -27,6 +28,7 @@ import { PageContainer, PageHeader } from "@/components/ui/PageHeader";
 import { Card, SectionTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
+import { CategoryManagerSheet } from "@/components/category/CategoryManagerSheet";
 import type { ThemePref } from "@/types";
 
 type Status = { kind: "idle" } | { kind: "busy"; label: string } | { kind: "ok"; message: string } | { kind: "error"; message: string };
@@ -58,6 +60,7 @@ export function SettingsPage() {
 
   const fileRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
 
   const runExportCsv = async () => {
     setStatus({ kind: "busy", label: "Menyiapkan CSV…" });
@@ -131,6 +134,20 @@ export function SettingsPage() {
               {theme === "system" && "Mengikuti pengaturan perangkat."}
             </span>
           </div>
+        </Card>
+      </section>
+
+      <section>
+        <SectionTitle icon={Tags} right={<span className="text-[11px] font-medium text-text-muted">{categories?.length ?? "…"} kategori</span>}>
+          Kategori
+        </SectionTitle>
+        <Card className="p-1.5">
+          <ActionRow
+            icon={<Tags size={18} strokeWidth={2} />}
+            title="Kelola Kategori"
+            description="Tambah, ubah, atau hapus kategori transaksi."
+            onClick={() => setCategoriesOpen(true)}
+          />
         </Card>
       </section>
 
@@ -239,6 +256,8 @@ export function SettingsPage() {
           </p>
         </Card>
       </section>
+
+      <CategoryManagerSheet open={categoriesOpen} onClose={() => setCategoriesOpen(false)} />
     </PageContainer>
   );
 }
